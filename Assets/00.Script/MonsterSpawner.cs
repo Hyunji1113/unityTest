@@ -21,6 +21,10 @@ public class MonsterSpawner : MonoBehaviour
 
     void Update()
     {
+
+        // 테스트 커밋용 주석 변경
+
+
         //if(Input.GetKeyDown(KeyCode.Space))
         //{
         //    var a = Instantiate(c, transform);
@@ -30,7 +34,6 @@ public class MonsterSpawner : MonoBehaviour
         //    a.transform.localPosition = new Vector3(rX, 1, rY);
         //}
     }
-
 
     IEnumerator SpawnMonster()
     {
