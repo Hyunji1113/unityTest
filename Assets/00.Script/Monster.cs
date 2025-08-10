@@ -20,16 +20,21 @@ public class Monster : MonoBehaviour
 
     private void Update()
     {
-        float distanceToPlayer = Vector3.Distance(player.position, transform.position);
+        TrackPlayer();
+    }
 
         if (distanceToPlayer < attackRange)
         {
             Debug.Log("Attack");
             anim.SetBool("isAttack", true);
         }
-        else if (distanceToPlayer > attackRange)
+
+    public void TrackPlayer()
         {
+        float distanceToPlayer = Vector3.Distance(player.position, transform.position);
       
+        if (distanceToPlayer > attackRange && isAlive)
+        {
             agent.SetDestination(player.position);
 
         }
