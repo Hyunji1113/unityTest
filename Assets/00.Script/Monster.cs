@@ -7,17 +7,19 @@ public class Monster : MonoBehaviour
     public Transform player;
     public float attackRange = 0.5f;
     public int monsterHP = 10;
+
     private NavMeshAgent agent;
-    public float attackRange = 0.5f;
+
+    private bool isAlive => monsterHP > 0;
 
     Animator anim;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        anim = GetComponent<Animator>();    
+        anim = GetComponent<Animator>();
 
-       player = FindFirstObjectByType<PlayerController>().transform;
+        player = FindFirstObjectByType<PlayerController>().transform;
     }
 
     public void ReceiveHit(int hitDamage)
@@ -33,7 +35,7 @@ public class Monster : MonoBehaviour
 
     IEnumerator WaitDestroy()
     {
-        yield return new WaitForSeconds(5f); // í•˜ë“œì½”ë”© ë³€ê²½í•˜ê¸°
+        yield return new WaitForSeconds(5f); // ÇÏµåÄÚµù º¯°æÇÏ±â
         Destroy(this.gameObject);
     }
 
@@ -43,22 +45,31 @@ public class Monster : MonoBehaviour
         TrackPlayer();
     }
 
-        if (distanceToPlayer < attackRange)
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("OnCollisionEntert");
+
+        if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Attack");
-            anim.SetBool("isAttack", true);
+            Debug.Log("PlayerPlayer");
+            PlayerController controller = collision.gameObject.GetComponentInParent<PlayerController>();
+
+            if (controller != null)
+            {
+                Debug.Log("Attack");
+                anim.SetBool("isAttack", true);
+                controller.ReceiveHit(30);
+            }
         }
+    }
 
     public void TrackPlayer()
-        {
+    {
         float distanceToPlayer = Vector3.Distance(player.position, transform.position);
-      
+
         if (distanceToPlayer > attackRange && isAlive)
         {
             agent.SetDestination(player.position);
-
         }
-        
-
     }
 }
