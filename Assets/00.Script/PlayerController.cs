@@ -3,11 +3,11 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 20f;
+    bool isSitting = false;
 
-
-    
     Vector3 move;
     Animator ani;
+
     void Start()
     {
       ani = GetComponentInChildren<Animator>();
@@ -21,6 +21,11 @@ public class PlayerController : MonoBehaviour
     }
     public void MoveTo()
     {
+        if (isSitting == true)
+        {
+            ani.SetBool("isWalk", false);
+            return;
+        }
         float xAxis = Input.GetAxisRaw("Horizontal");
         float zAxis = Input.GetAxisRaw("Vertical");
 
@@ -41,8 +46,12 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
+            isSitting = !isSitting;
             ani.SetTrigger("isSit");
+
+        
         }
+
     }
    
 }
