@@ -184,10 +184,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterPrefab:
-  - {fileID: 7427070853888570003, guid: dcc982307a817354fafb192abcd9b917, type: 3}
-  - {fileID: 4245915190017150719, guid: cbc814ca6b730954b8a5e3641bde01c9, type: 3}
-  - {fileID: 264213370537990050, guid: 7162793d91fb69744a25a3a0371894ba, type: 3}
-  spawnTime: 5
+  - {fileID: 9010288217724217015, guid: 2f0ac19284eeea245b5562afabd23a71, type: 3}
+  - {fileID: 6386543311456360985, guid: 9e3db65578ca1f24a9c3e7ee9d7c7f7f, type: 3}
+  - {fileID: 7280684866749526293, guid: bcdf21739eb289c4da2d9e566566c4e4, type: 3}
+  spawnTime: 1
   spawnPoints: []
   t1: {fileID: 1889814241}
   t2: {fileID: 369896163}
@@ -1071,15 +1071,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c1a48883f7cd9014a8ba849bb09547a7, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c1a48883f7cd9014a8ba849bb09547a7, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c1a48883f7cd9014a8ba849bb09547a7, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c1a48883f7cd9014a8ba849bb09547a7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1213,6 +1213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
+  playerHP: 0
 --- !u!1 &1824110542
 GameObject:
   m_ObjectHideFlags: 0
