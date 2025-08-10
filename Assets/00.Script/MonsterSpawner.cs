@@ -22,18 +22,6 @@ public class MonsterSpawner : MonoBehaviour
     void Update()
     {
 
-        // 테스트 커밋용 주석 변경
-        // 수정수정
-
-
-        //if(Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    var a = Instantiate(c, transform);
-
-        //    float rX = Random.Range(t1.localPosition.x, t2.localPosition.x);
-        //    float rY = Random.Range(t1.localPosition.z, t2.localPosition.z);
-        //    a.transform.localPosition = new Vector3(rX, 1, rY);
-        //}
     }
 
     IEnumerator SpawnMonster()

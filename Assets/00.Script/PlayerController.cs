@@ -3,6 +3,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 20f;
+    public int playerHP = 100;
+
     bool isSitting = false;
 
     Vector3 move;
@@ -18,7 +20,21 @@ public class PlayerController : MonoBehaviour
         MoveTo();
         Look();
         Sit();
+        Attack();
     }
+
+    // 공격이 생기면, 플레이어가 할일은, 스페이스바 눌렀을때 공격 애니메이션
+    
+    // 나중에 무기가 생기면 해당 무기용 weapon 클래스 생성, isTrigger 처리,
+    // ontriggereEnter로 아래 함수 이동 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Enemy"))
+        {
+            collision.transform.GetComponent<Monster>().ReceiveHit(5);
+        }
+    }
+
     public void MoveTo()
     {
         if (isSitting == true)
@@ -47,11 +63,26 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             isSitting = !isSitting;
-            ani.SetTrigger("isSit");
-
-        
+            ani.SetTrigger("isSit");        
         }
-
     }
-   
+
+    public void Attack()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ani.SetBool("isAttack", true);
+            transform.position += move * speed * Time.deltaTime;
+        }
+        else
+        {
+            ani.SetBool("isAttack", false);
+        }
+    }
+
+    public void ReceiveHit(int hitDamage)
+    {
+        Debug.Log("hit hit" + hitDamage);
+        playerHP -= hitDamage;
+    }
 }
