@@ -7,7 +7,6 @@ public class Monster : MonoBehaviour
     public Transform player;
     public float attackRange = 0.5f;
     public int monsterHP = 10;
-
     private NavMeshAgent agent;
 
     private bool isAlive => monsterHP > 0;
@@ -30,6 +29,9 @@ public class Monster : MonoBehaviour
         {
             anim.SetTrigger("Die");
             StartCoroutine(WaitDestroy());
+
+            DropItem(1001, transform.position);
+            //Destroy(gameObject);
         }
     }
 
@@ -72,4 +74,20 @@ public class Monster : MonoBehaviour
             agent.SetDestination(player.position);
         }
     }
+
+    public void DropItem(int uuid, Vector3 dropPosition)
+    {
+        Item itemToDrop = ItemAssetsInfo.Instance.ItemInfos.Find(item => item.GetUUID() == uuid);
+
+        if (itemToDrop != null)
+        {
+            Instantiate(itemToDrop.GetPrefab(), dropPosition, Quaternion.identity);
+        }
+        else
+        {
+            Debug.LogWarning("해당 UUID의 아이템을 찾을 수 없습니다: " + uuid);
+        }
+    }
+
 }
+
