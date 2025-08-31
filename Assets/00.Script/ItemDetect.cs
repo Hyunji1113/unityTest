@@ -17,8 +17,6 @@ public class ItemDetect : MonoBehaviour
         }
     }
 
-
-
     private void Update()
     {
         if (itemInRange.Count > 0 && Input.GetKeyDown(getkey))
@@ -26,16 +24,13 @@ public class ItemDetect : MonoBehaviour
             GameObject closestItem = GetClosestItem();
             if (closestItem != null)
             {
-                Item info = closestItem.GetComponent<Item>();
-                
-                
+                var itemUUID = closestItem.GetComponent<Item>().GetUUID();
+                Inventory.Instance.AddItem(itemUUID);
                 //¿Œ∫• √ﬂ∞°
+                Debug.Log("»πµÊ");
                 itemInRange.Remove(closestItem);
                 Destroy(closestItem);
-
-
             }
-
         }
     }
 

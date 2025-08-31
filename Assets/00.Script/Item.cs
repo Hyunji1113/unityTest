@@ -18,5 +18,9 @@ public class Item : MonoBehaviour
         return uuid;
     }
 
+    private void Update()
+    {
+        transform.Rotate(Vector3.up * 15 * Time.deltaTime);
+    }
 }
 

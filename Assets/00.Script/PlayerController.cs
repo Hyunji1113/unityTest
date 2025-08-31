@@ -82,7 +82,6 @@ public class PlayerController : MonoBehaviour
 
     public void ReceiveHit(int hitDamage)
     {
-        Debug.Log("hit hit" + hitDamage);
         playerHP -= hitDamage;
     }
 }

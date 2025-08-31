@@ -1,16 +1,30 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public TextMeshProUGUI countText;
+    public RawImage image;
+
+    public Item item;
+    private int count;
+
+    public int Count
     {
-        
+        get => count;
+        set
+        {
+            count = value;
+            countText.text = count.ToString();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetItem(int uuid)
     {
-        
+        var itemInfo = ItemAssetsInfo.Instance.GetItemInfo(uuid);
+        item = itemInfo;
+        image.texture = item.itemImage.mainTexture;
     }
 }
+

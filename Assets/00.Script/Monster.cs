@@ -6,7 +6,7 @@ public class Monster : MonoBehaviour
 {
     public Transform player;
     public float attackRange = 0.5f;
-    public int monsterHP = 10;
+    public int monsterHP = 4;
     private NavMeshAgent agent;
 
     private bool isAlive => monsterHP > 0;
@@ -23,7 +23,6 @@ public class Monster : MonoBehaviour
 
     public void ReceiveHit(int hitDamage)
     {
-        Debug.Log("Enemy hit hit" + hitDamage);
         monsterHP -= hitDamage;
         if (monsterHP < 0)
         {
@@ -49,16 +48,12 @@ public class Monster : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("OnCollisionEntert");
-
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("PlayerPlayer");
             PlayerController controller = collision.gameObject.GetComponentInParent<PlayerController>();
 
             if (controller != null)
             {
-                Debug.Log("Attack");
                 anim.SetBool("isAttack", true);
                 controller.ReceiveHit(30);
             }

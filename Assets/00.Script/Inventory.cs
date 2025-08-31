@@ -1,36 +1,58 @@
 using System.Collections.Generic;
+using System.Linq;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
+using DG.Tweening;
 
 public class Inventory : MonoBehaviour
 {
-    [SerializeField] private List<ItemSlot> itemSlotList;
+    [SerializeField] private List<ItemSlot> itemSlotList = new List<ItemSlot>();
     public int maxSlotCount = 10;
+    public GameObject inventoryWindow;
 
-    public void AddItem(Item item)
+    public static Inventory Instance;
+    private void Awake()
     {
-        CheckItemHave(item);
+        if (Instance)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            Instance = this;
+        }
+
+        inventoryWindow.SetActive(false);
     }
 
-    private void CheckItemHave(Item item)
+    public void AddItem(int uuid)
     {
-        int itemUUID = item.GetUUID();
+        CheckItemHave(uuid);
+    }
 
+    private void CheckItemHave(int uuid)
+    {
         foreach (var slot in itemSlotList)
         {
-            if (slot.item.GetUUID() == itemUUID)
+            if (slot.item != null)
             {
-                slot.Count++;
-                return;
+                if (slot.item.GetUUID() == uuid)
+                {
+                    slot.Count++;
+                    return;
+                }
             }
         }
 
-        SetNewItem(item);
+        SetNewItem(uuid);
     }
 
-    private void SetNewItem(Item item)
+    private void SetNewItem(int uuid)
     {
         var emptySlot = GetFirstEmptySlot();
 
@@ -40,7 +62,7 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            emptySlot.SetItem(item);
+            emptySlot.SetItem(uuid);
         }
     }
 
@@ -48,7 +70,7 @@ public class Inventory : MonoBehaviour
     {
         foreach (var slot in itemSlotList)
         {
-            if (slot.item ==  null)
+            if (slot.item == null)
             {
                 return slot;
             }
@@ -56,31 +78,26 @@ public class Inventory : MonoBehaviour
 
         return null;
     }
+    //bool isOn = true;
+    private Vector3 targetPos = new Vector3(425,270,0);
 
-
-
-    public class ItemSlot : MonoBehaviour
+    private void Update()
     {
-        public TextMeshProUGUI countText;
-        public Image image;
-
-        public Item item;
-        private int count;
-        public int Count
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
-            get => count;
-            set
-            {
-                count = value;
-                countText.text = count.ToString();
-            }
-        }
+            transform.DOMove(targetPos, 1.0f);
+            //OnOffInventory();
+        }   
 
-        public void SetItem(Item item)
-        {
-            this.item = item;
-            this.count = 1;
-            this.image = item.itemImage;
-        }
+        
     }
+
+
+   
+    //private void OnOffInventory()
+    //{
+    //    isOn = !isOn;
+    //    inventoryWindow.SetActive(isOn);
+
+    //}
 }
