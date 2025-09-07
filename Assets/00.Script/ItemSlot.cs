@@ -8,7 +8,7 @@ public class ItemSlot : MonoBehaviour
     public RawImage image;
 
     public Item item;
-    private int count;
+    public int count;
 
     public int Count
     {
