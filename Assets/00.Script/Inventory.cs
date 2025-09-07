@@ -15,9 +15,13 @@ public class Inventory : MonoBehaviour
     public GameObject inventoryWindow;
 
     public static Inventory Instance;
+    private Vector3 originPosition;
+
+    ItemSlot itemSlot;
+
     private void Awake()
     {
-        if (Instance)
+        if (Instance != null)
         {
             Destroy(gameObject);
             return;
@@ -27,9 +31,33 @@ public class Inventory : MonoBehaviour
             Instance = this;
         }
 
-        inventoryWindow.SetActive(false);
+        inventoryWindow.SetActive(true);
+        originPosition= inventoryWindow.transform.position;
+        
+    }
+    public bool HasItem(int count , int id)
+    {
+        bool result = false;
+
+        foreach(var slotItem in itemSlotList)
+        {
+            if(slotItem.item != null)
+            {
+                if(slotItem.item.GetUUID() == id)
+                {
+                    itemSlot = slotItem;
+                    return slotItem.count >= count;
+                }
+            }
+        }
+
+        return result;
     }
 
+    public void spendCoins(int count)
+    {
+        itemSlot.count--;
+    }
     public void AddItem(int uuid)
     {
         CheckItemHave(uuid);
@@ -79,21 +107,38 @@ public class Inventory : MonoBehaviour
         return null;
     }
     //bool isOn = true;
-    private Vector3 targetPos = new Vector3(425,270,0);
+    private Vector3 targetPos = new Vector3(262, 91, 2);
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            transform.DOMove(targetPos, 1.0f);
-            //OnOffInventory();
-        }   
-
-        
+            if (inventoryWindow.transform.position == originPosition)
+            {
+                MoveUpInven();
+            }
+            else
+            {
+                MoveDownInven();
+            }
+            
+        }          
     }
 
 
-   
+    private void MoveUpInven()
+    {
+      
+        inventoryWindow.transform.DOMove(targetPos, 1.0f);
+
+    }
+
+    private void MoveDownInven()
+    {
+        inventoryWindow.transform.DOMove(originPosition, 1.0f);
+    }
+
+
     //private void OnOffInventory()
     //{
     //    isOn = !isOn;
